@@ -3,9 +3,12 @@ package frdigi2024;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class App {
+
+
+public class TestDelete {
 
 	private static final String DB_URL;
 	private static final String DB_USER;
@@ -18,10 +21,19 @@ public class App {
 		DB_PWD = dbConfig.getString("db.pwd");
 	}
 	
-	public static void main(String[] args) throws SQLException {
-		Connection connection = DriverManager.getConnection(DB_URL,DB_USER,	DB_PWD);
-		System.out.println(connection);
-		connection.close();
+	public static void main(String[] args){
+		
+		try(Connection connection = DriverManager.getConnection(DB_URL,DB_USER,	DB_PWD);
+		
+		Statement statement = connection.createStatement();) {
+		
+		int nb3 = statement.executeUpdate("DELETE FROM FOURNISSEUR WHERE ID=4");
+		System.out.println(nb3);
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			
+		}
+		System.out.println("fin du programme");
 	}
 
 }
